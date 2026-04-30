@@ -24,11 +24,18 @@ def Pallas : WeierstrassCurve Fp where
   a₄ := 0
   a₆ := 5
 
-/-- The discriminant of Pallas is nonzero in Fp.
-    For y² = x³ + 5 the discriminant is -16(4·0³ + 27·25) = -10800,
-    which is nonzero since char(Fp) ∤ 10800. -/
+theorem Pallas.delta_eq : Pallas.Δ = ((-10800 : ℤ) : Fp) := by
+  simp only [Pallas, WeierstrassCurve.Δ, WeierstrassCurve.b₂, WeierstrassCurve.b₄,
+             WeierstrassCurve.b₆, WeierstrassCurve.b₈]
+  push_cast; ring
+
 theorem Pallas.discriminant_isUnit : IsUnit Pallas.Δ := by
-  sorry
+  rw [Pallas.delta_eq, isUnit_iff_ne_zero, ne_eq, ZMod.intCast_zmod_eq_zero_iff_dvd]
+  intro h
+  have : (Fp.p : ℤ) ≤ 10800 :=
+    Int.le_of_dvd (by norm_num) (by rwa [Int.dvd_neg] at h)
+  simp only [Fp.p] at this
+  omega
 
 /-- Pallas is an elliptic curve (its discriminant is a unit). -/
 instance : Pallas.IsElliptic :=

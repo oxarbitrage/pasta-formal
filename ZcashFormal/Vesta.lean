@@ -24,9 +24,18 @@ def Vesta : WeierstrassCurve Fq where
   a₄ := 0
   a₆ := 5
 
-/-- The discriminant of Vesta is nonzero in Fq. -/
+theorem Vesta.delta_eq : Vesta.Δ = ((-10800 : ℤ) : Fq) := by
+  simp only [Vesta, WeierstrassCurve.Δ, WeierstrassCurve.b₂, WeierstrassCurve.b₄,
+             WeierstrassCurve.b₆, WeierstrassCurve.b₈]
+  push_cast; ring
+
 theorem Vesta.discriminant_isUnit : IsUnit Vesta.Δ := by
-  sorry
+  rw [Vesta.delta_eq, isUnit_iff_ne_zero, ne_eq, ZMod.intCast_zmod_eq_zero_iff_dvd]
+  intro h
+  have : (Fq.p : ℤ) ≤ 10800 :=
+    Int.le_of_dvd (by norm_num) (by rwa [Int.dvd_neg] at h)
+  simp only [Fq.p] at this
+  omega
 
 /-- Vesta is an elliptic curve (its discriminant is a unit). -/
 instance : Vesta.IsElliptic :=
