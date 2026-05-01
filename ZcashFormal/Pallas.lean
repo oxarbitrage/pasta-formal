@@ -37,13 +37,17 @@ theorem Pallas.discriminant_isUnit : IsUnit Pallas.Δ := by
   simp only [Fp.p] at this
   omega
 
-/-- Pallas is an elliptic curve (its discriminant is a unit). -/
 instance : Pallas.IsElliptic :=
   ⟨Pallas.discriminant_isUnit⟩
 
-/-- A generator of the Pallas group: (-1, 2). -/
-def Pallas.generator : Pallas.toAffine.Point := by
-  sorry
+theorem Pallas.equation_neg1_2 : Pallas.toAffine.Equation (-1) 2 := by
+  rw [WeierstrassCurve.Affine.equation_iff]
+  simp only [Pallas, WeierstrassCurve.toAffine]
+  ring
+
+/-- A generator of the Pallas group: the point (-1, 2). -/
+def Pallas.generator : Pallas.toAffine.Point :=
+  WeierstrassCurve.Affine.Point.mk Pallas.equation_neg1_2
 
 end
 

@@ -37,13 +37,17 @@ theorem Vesta.discriminant_isUnit : IsUnit Vesta.Δ := by
   simp only [Fq.p] at this
   omega
 
-/-- Vesta is an elliptic curve (its discriminant is a unit). -/
 instance : Vesta.IsElliptic :=
   ⟨Vesta.discriminant_isUnit⟩
 
-/-- A generator of the Vesta group: (-1, 2). -/
-def Vesta.generator : Vesta.toAffine.Point := by
-  sorry
+theorem Vesta.equation_neg1_2 : Vesta.toAffine.Equation (-1) 2 := by
+  rw [WeierstrassCurve.Affine.equation_iff]
+  simp only [Vesta, WeierstrassCurve.toAffine]
+  ring
+
+/-- A generator of the Vesta group: the point (-1, 2). -/
+def Vesta.generator : Vesta.toAffine.Point :=
+  WeierstrassCurve.Affine.Point.mk Vesta.equation_neg1_2
 
 end
 
