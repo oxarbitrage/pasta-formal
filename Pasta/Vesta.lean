@@ -12,8 +12,6 @@ It has prime order equal to `Fp.p` (the Pallas base field modulus) and cofactor 
 Together with Pallas it enables efficient recursive proof composition in the
 [Halo 2](https://zcash.github.io/halo2/) proving system used by Zcash.
 
-The name "Vesta" comes from the *Vesta cat breed* (a fictional cat, continuing
-the naming theme).
 -/
 
 noncomputable section

@@ -12,8 +12,6 @@ It has prime order equal to `Fq.p` (the Vesta base field modulus) and cofactor 1
 Together with Vesta it enables efficient recursive proof composition in the
 [Halo 2](https://zcash.github.io/halo2/) proving system used by Zcash.
 
-The name "Pallas" comes from *Pallas's cat*, continuing the Zcash tradition of
-cat-themed cryptography.
 -/
 
 noncomputable section
