@@ -9,7 +9,7 @@ a primitive root and the prime factorization of (factor - 1), verified by
 `native_decide` for modular exponentiations and `norm_num` for small primes.
 -/
 
-namespace ZcashFormal.PrattCertificates
+namespace Pasta.PrattCertificates
 
 set_option maxRecDepth 4096
 
@@ -360,4 +360,4 @@ theorem prime_D : Nat.Prime 10427374428728808478656897599072717 := by
       · right; right; right; right; exact prime_dvd_prime_eq hq prime_5239247429827 h
     rcases this with rfl | rfl | rfl | rfl | rfl <;> native_decide
 
-end ZcashFormal.PrattCertificates
+end Pasta.PrattCertificates

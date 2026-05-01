@@ -1,11 +1,11 @@
 import Lake
 open Lake DSL
 
-package ZcashFormal where
+package Pasta where
   leanOptions := #[⟨`autoImplicit, false⟩]
 
 @[default_target]
-lean_lib ZcashFormal where
+lean_lib Pasta where
 
 require mathlib from git
   "https://github.com/leanprover-community/mathlib4"

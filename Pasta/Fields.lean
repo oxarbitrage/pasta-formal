@@ -2,20 +2,24 @@ import Mathlib.Data.ZMod.Basic
 import Mathlib.FieldTheory.Finite.Basic
 import Mathlib.NumberTheory.LucasPrimality
 import Mathlib.Tactic.NormNum.Prime
-import ZcashFormal.PrattCertificates
+import Pasta.PrattCertificates
 
-namespace ZcashFormal
+namespace Pasta
 
 /-! # Pasta curve base fields
 
-The Pallas and Vesta curves form a 2-cycle of elliptic curves. Their defining
-feature is that each curve's scalar field is the other's base field.
+The Pallas and Vesta curves form a 2-cycle of elliptic curves over prime fields.
+Each curve's scalar field equals the other's base field:
 
-  Pallas base field prime = Vesta scalar field prime = `Fp.p`
-  Vesta base field prime = Pallas scalar field prime = `Fq.p`
+  - Pallas is defined over `Fp` and has scalar field `Fq`
+  - Vesta is defined over `Fq` and has scalar field `Fp`
 
-Both primes are ≈ 2^254. Primality is proven via the Lucas test (Pratt certificates)
-with witness a = 5 (a primitive root for both fields).
+Both primes are ≈ 2²⁵⁴ and were chosen to enable efficient recursive proof
+composition in the Halo 2 proving system. See
+[The Pasta Curves for Halo 2 and Beyond](https://electriccoin.co/blog/the-pasta-curves-for-halo-2-and-beyond/).
+
+Primality is proven via the Lucas test (Pratt certificates) with witness `a = 5`,
+which is a primitive root for both fields.
 -/
 
 private theorem prime_dvd_prime_eq {p q : ℕ} (hp : Nat.Prime p) (hq : Nat.Prime q)
@@ -26,14 +30,23 @@ set_option maxRecDepth 4096
 
 namespace Fp
 
-/-- The Pallas base field modulus. Equal to the Vesta group order.
-    0x40000000000000000000000000000000224698fc094cf91b992d30ed00000001 -/
+/-- The Pallas base field modulus (also the Vesta group order).
+
+`Fp.p = 2²⁵⁴ + 45560315531506369815346746415080538113`
+
+In hex: `0x40000000000000000000000000000000224698fc094cf91b992d30ed00000001`. -/
 def p : ℕ := 28948022309329048855892746252171976963363056481941560715954676764349967630337
 
 private theorem factorization :
     p - 1 = 2 ^ 32 * 3 * 463 * 539204044132271846773 *
         8999194758858563409123804352480028797519453 := by native_decide
 
+/-- `Fp.p` is prime, proven via a Pratt certificate with witness `a = 5`.
+
+The factorization `p - 1 = 2³² × 3 × 463 × 539204044132271846773
+× 8999194758858563409123804352480028797519453` is verified by `native_decide`,
+and `5` is shown to be a primitive root by checking `5^((p-1)/q) ≢ 1`
+for each prime factor `q`. -/
 instance : Fact (Nat.Prime p) := ⟨by
   apply lucas_primality p (5 : ZMod p)
   · native_decide
@@ -62,14 +75,23 @@ end Fp
 
 namespace Fq
 
-/-- The Vesta base field modulus. Equal to the Pallas group order.
-    0x40000000000000000000000000000000224698fc0994a8dd8c46eb2100000001 -/
+/-- The Vesta base field modulus (also the Pallas group order).
+
+`Fq.p = 2²⁵⁴ + 45560315531506369815346746415080538113 + 86663886297413177741937042428387104`
+
+In hex: `0x40000000000000000000000000000000224698fc0994a8dd8c46eb2100000001`. -/
 def p : ℕ := 28948022309329048855892746252171976963363056481941647379679742748393362948097
 
 private theorem factorization :
     p - 1 = 2 ^ 32 * 3 ^ 2 * 1709 * 24859 * 1690502597179744445941507 *
         10427374428728808478656897599072717 := by native_decide
 
+/-- `Fq.p` is prime, proven via a Pratt certificate with witness `a = 5`.
+
+The factorization `p - 1 = 2³² × 3² × 1709 × 24859 × 1690502597179744445941507
+× 10427374428728808478656897599072717` is verified by `native_decide`,
+and `5` is shown to be a primitive root by checking `5^((p-1)/q) ≢ 1`
+for each prime factor `q`. -/
 instance : Fact (Nat.Prime p) := ⟨by
   apply lucas_primality p (5 : ZMod p)
   · native_decide
@@ -99,10 +121,12 @@ instance : Fact (Nat.Prime p) := ⟨by
 
 end Fq
 
-/-- The Pallas base field (also the Vesta scalar field). -/
+/-- The Pallas base field `𝔽_p`, defined as `ℤ/pℤ` where `p = Fp.p`.
+This is also the Vesta scalar field. -/
 abbrev Fp := ZMod Fp.p
 
-/-- The Vesta base field (also the Pallas scalar field). -/
+/-- The Vesta base field `𝔽_q`, defined as `ℤ/qℤ` where `q = Fq.p`.
+This is also the Pallas scalar field. -/
 abbrev Fq := ZMod Fq.p
 
-end ZcashFormal
+end Pasta
