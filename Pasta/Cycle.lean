@@ -39,4 +39,27 @@ theorem same_equation :
     Vesta.a₁ = 0 ∧ Vesta.a₂ = 0 ∧ Vesta.a₃ = 0 ∧ Vesta.a₄ = 0 ∧ Vesta.a₆ = 5 := by
   exact ⟨rfl, rfl, rfl, rfl, rfl, rfl, rfl, rfl, rfl, rfl⟩
 
+/-- The Pallas curve over Fp has exactly Fq.p rational points (affine points including the identity).
+    This establishes half of the 2-cycle: |Pallas(𝔽_p)| = q.
+
+    This axiom is consistent with the known parameters of the Pasta curves as verified
+    by the Zcash team using the Sage `pasta-hadeshash` scripts. A formal proof would require
+    Schoof's algorithm or an AGM-based certificate, neither of which is currently available
+    in Mathlib.
+
+    Note: This is the same result axiomatized as `order_pallas` in redpallas-formal. -/
+axiom cycle_conjecture_pallas :
+    Nat.card (Pallas.toAffine.Point) = Fq.p
+
+/-- The Vesta curve over Fq has exactly Fp.p rational points (affine points including the identity).
+    This establishes the other half of the 2-cycle: |Vesta(𝔽_q)| = p.
+
+    Together with `cycle_conjecture_pallas`, this proves the cycle property:
+    each curve's group order equals the other curve's field characteristic.
+    This cycle is what enables Halo 2's efficient recursive proof composition:
+    a proof about Pallas arithmetic can be verified by a Vesta circuit and vice versa,
+    with no field extension mismatch. -/
+axiom cycle_conjecture_vesta :
+    Nat.card (Vesta.toAffine.Point) = Fp.p
+
 end Pasta
