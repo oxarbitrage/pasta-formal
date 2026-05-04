@@ -20,6 +20,15 @@ All definitions and theorems live under the `Pasta` namespace.
 | Point (-1, 2) on both curves | `Pasta/Pallas.lean`, `Pasta/Vesta.lean` | Equation check via `ring` |
 | Both curves share the equation y² = x³ + 5 | `Pasta/Cycle.lean` | `rfl` |
 
+### Design properties
+
+Both 255-bit primes provide **126-bit security** against Pollard rho attacks. Key design properties visible in the formalized factorizations:
+
+- **2-adicity of 32**: both `p - 1` and `q - 1` have `2³²` as a factor, enabling efficient NTT-based polynomial arithmetic in Halo 2's PLONKish arithmetization.
+- **No small-order multiplicative subgroups**: neither field has 5-order or 7-order subgroups, so exponentiation by small primes is a permutation — a requirement for algebraic hash functions like [Poseidon](https://github.com/oxarbitrage/poseidon-formal).
+
+The curves were selected using a [reproducible search tool](https://github.com/zcash/pasta).
+
 ## Downstream projects
 
 This library is the foundation for a stack of Zcash formalizations:
@@ -62,6 +71,7 @@ Then import with `import Pasta.Fields`, `import Pasta.Pallas`, etc.
 ## References
 
 - [Zcash Protocol Specification §5.4.9.6](https://zips.z.cash/protocol/protocol.pdf#pallasandvesta) — Pallas and Vesta parameters
+- [zcash/pasta](https://github.com/zcash/pasta) — curve search and selection tool
 - [zcash/pasta_curves](https://github.com/zcash/pasta_curves) — Rust implementation
 - [Angdinata & Xu, ITP 2023](https://drops.dagstuhl.de/entities/document/10.4230/LIPIcs.ITP.2023.6) — Mathlib's elliptic curve group law proof
 
