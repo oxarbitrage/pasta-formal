@@ -34,3 +34,18 @@ Lean 4 (`v4.30.0-rc2`), [Mathlib4](https://github.com/leanprover-community/mathl
 - [Zcash Protocol Spec §5.4.9.7](https://zips.z.cash/protocol/protocol.pdf)
 - [Halo 2 book](https://zcash.github.io/halo2/)
 - [pasta-hadeshash](https://github.com/zcash/pasta-hadeshash)
+
+---
+
+## Part of a series
+
+Six repositories formally verifying the Zcash Orchard cryptographic stack:
+
+| Layer | Repository |
+|-------|-----------|
+| Curves | [pasta-formal](https://github.com/oxarbitrage/pasta-formal) |
+| Hash | [poseidon-formal](https://github.com/oxarbitrage/poseidon-formal) |
+| Hash-to-curve | [sinsemilla-formal](https://github.com/oxarbitrage/sinsemilla-formal) |
+| Signatures | [redpallas-formal](https://github.com/oxarbitrage/redpallas-formal) |
+| Protocol | [orchard-formal](https://github.com/oxarbitrage/orchard-formal) |
+| Proof system | [halo2-formal](https://github.com/oxarbitrage/halo2-formal) |
