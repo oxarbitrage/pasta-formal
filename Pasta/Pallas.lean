@@ -60,11 +60,11 @@ theorem Pallas.equation_neg1_2 : Pallas.toAffine.Equation (-1) 2 := by
   simp only [Pallas, WeierstrassCurve.toAffine]
   ring
 
-/-- A generator of the Pallas curve: the point `(-1, 2)`.
+/-- A known point on the Pallas curve: `(-1, 2)`.
 
-This is a standard generator used in the
-[pasta_curves](https://github.com/zcash/pasta_curves) implementation. -/
-def Pallas.generator : Pallas.toAffine.Point :=
+This witnesses that the curve has rational points. The protocol generators
+are derived via hash-to-curve and are defined in downstream libraries. -/
+def Pallas.examplePoint : Pallas.toAffine.Point :=
   WeierstrassCurve.Affine.Point.mk Pallas.equation_neg1_2
 
 end

@@ -16,7 +16,7 @@ Each curve's scalar field equals the other's base field:
 
 Both primes are ≈ 2²⁵⁴ and were chosen to enable efficient recursive proof
 composition in the Halo 2 proving system. See
-[The Pasta Curves for Halo 2 and Beyond](https://electriccoin.co/blog/the-pasta-curves-for-halo-2-and-beyond/).
+[Zcash Protocol Specification §5.4.9.6](https://zips.z.cash/protocol/protocol.pdf#pallasandvesta).
 
 Primality is proven via the Lucas test (Pratt certificates) with witness `a = 5`,
 which is a primitive root for both fields.

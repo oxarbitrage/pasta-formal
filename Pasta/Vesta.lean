@@ -58,11 +58,11 @@ theorem Vesta.equation_neg1_2 : Vesta.toAffine.Equation (-1) 2 := by
   simp only [Vesta, WeierstrassCurve.toAffine]
   ring
 
-/-- A generator of the Vesta curve: the point `(-1, 2)`.
+/-- A known point on the Vesta curve: `(-1, 2)`.
 
-This is a standard generator used in the
-[pasta_curves](https://github.com/zcash/pasta_curves) implementation. -/
-def Vesta.generator : Vesta.toAffine.Point :=
+This witnesses that the curve has rational points. The protocol generators
+are derived via hash-to-curve and are defined in downstream libraries. -/
+def Vesta.examplePoint : Vesta.toAffine.Point :=
   WeierstrassCurve.Affine.Point.mk Vesta.equation_neg1_2
 
 end
